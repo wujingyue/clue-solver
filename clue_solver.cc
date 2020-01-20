@@ -7,13 +7,9 @@
 #include <unordered_map>
 #include <vector>
 
-using namespace std;
+#include "config.h"
 
-constexpr int kPlayers = 6;
-constexpr int kSuspects = 6;
-constexpr int kWeapons = 6;
-constexpr int kRooms = 9;
-constexpr int kCards = kSuspects + kWeapons + kRooms;
+using namespace std;
 
 class NameTracker {
  public:
@@ -149,7 +145,7 @@ class ProbabilityComputer {
       }
     }
     sort(guesses.begin(), guesses.end(),
-         [](const auto& left, const auto& right) {
+         [](const Guess& left, const Guess& right) {
            return left.probability > right.probability;
          });
     return guesses;
@@ -365,7 +361,7 @@ int main(int argc, char* argv[]) {
   vector<pair<string, double>> sorted_room_probs;
   copy(room_prob.begin(), room_prob.end(), back_inserter(sorted_room_probs));
   sort(sorted_room_probs.begin(), sorted_room_probs.end(),
-       [](const auto& left, const auto& right) {
+       [](const pair<string, double>& left, const pair<string, double>& right) {
          return left.second > right.second;
        });
   for (const auto& kv : sorted_room_probs) {
